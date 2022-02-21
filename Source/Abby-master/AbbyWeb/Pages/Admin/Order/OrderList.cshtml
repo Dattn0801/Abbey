@@ -1,0 +1,78 @@
+﻿@page
+@model AbbyWeb.Pages.Admin.Order.OrderListModel
+
+@{
+	var status = HttpContext.Request.Query["status"];
+    var cancelled = "text-primary";
+    var completed = "text-primary";
+    var inProcess = "text-primary";
+    var ready="text-primary";
+
+	if (status == "cancelled")
+    {
+        cancelled = "active text-white";
+    }
+    else
+    {
+        if (status == "completed")
+        {
+            completed = "active text-white";
+        }
+        else
+        {
+            if (status == "ready")
+            {
+                ready = "active text-white";
+            }
+            else
+            {
+                inProcess = "active text-white";
+            }
+        }
+    }
+
+}
+
+<div class="container p-3">
+	<div class="d-flex justify-content-between">
+		<div class="p-2">
+			<h2 class="text-primary">Danh sách đơn hàng</h2>
+		</div>
+		<div class="p-2">
+			<ul class="list-group list-group-horizontal-sm">
+				<a style="text-decoration:none;" asp-page="OrderList" asp-route-status="cancelled">
+					<li class="list-group-item @cancelled">Đã hủy</li>
+				</a>
+				<a style="text-decoration:none;" asp-page="OrderList" asp-route-status="completed">
+					<li class="list-group-item @completed">Đã hoàn tất</li>
+				</a>
+				<a style="text-decoration:none;" asp-page="OrderList" asp-route-status="ready">
+					<li class="list-group-item @ready">Sãn sàng bê lên</li>
+				</a>
+				<a style="text-decoration:none;" asp-page="OrderList" asp-route-status="inprocess">
+					<li class="list-group-item @inProcess">Đang tiến hành</li>
+				</a>
+			</ul>
+		</div>
+	</div>
+
+	<br /><br />
+
+	<table id="DT_load" class="table table-bordered table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th>Mã đơn hàng</th>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Tổng tiền (USD)</th>
+                <th>Thời gian đặt </th>
+                <th></th>
+			</tr>
+		</thead>
+	</table>
+
+</div>
+
+@section Scripts{
+	<script src="~/js/orderList.js"></script>
+}
